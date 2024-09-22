@@ -1,4 +1,3 @@
-// models/person.ts
 import { Animal } from "./animal";
 
 export class Person {

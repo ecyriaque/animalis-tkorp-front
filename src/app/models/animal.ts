@@ -11,4 +11,3 @@ export class Animal {
     this.ownerId = data.ownerId;
   }
 }
-// src/app/models/animal.ts
