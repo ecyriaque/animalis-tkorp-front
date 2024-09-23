@@ -4,7 +4,7 @@ import { Animal } from "../models/animal";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const AnimalService = {
-  // Fetch all animals
+  // get all animals
   async getAllAnimals(): Promise<Animal[]> {
     try {
       const response = await axios.get(`${API_URL}/animal`);
@@ -15,7 +15,7 @@ export const AnimalService = {
     }
   },
 
-  // Fetch a specific animal by ID
+  // get a specific animal by ID
   async getAnimalById(id: number): Promise<Animal> {
     try {
       const response = await axios.get(`${API_URL}/animal/${id}`);
@@ -26,22 +26,48 @@ export const AnimalService = {
     }
   },
 
-  // Fetch the oldest animal
+  // get the oldest animal using GraphQL
   async getOlderAnimal(): Promise<Animal> {
+    const query = `
+    query {
+      oldestAnimal {
+        id
+        name
+        dateOfBirth
+        species
+        weight
+        color
+        breed
+        owner {
+                id
+                firstName
+                lastName
+              }
+      }
+    }
+  `;
+
     try {
-      const response = await axios.get(`${API_URL}/animal/older`);
-      return new Animal(response.data);
+      const response = await axios.post(`${API_URL}/graphql`, { query });
+      console.log(response);
+      return new Animal(response.data.data.oldestAnimal);
     } catch (error) {
       console.error("Error fetching the oldest animal:", error);
       throw error;
     }
   },
 
-  // Fetch the most popular animal species
+  // get the most popular animal species using GraphQL
   async getPopularSpecies(): Promise<{ species: string }> {
+    const query = `
+    query {
+      popularSpecies
+    }
+  `;
+
     try {
-      const response = await axios.get(`${API_URL}/animal/popular-species`);
-      return response.data;
+      const response = await axios.post(`${API_URL}/graphql`, { query });
+      return { species: response.data.data.popularSpecies };
     } catch (error) {
       console.error("Error fetching the popular species:", error);
       throw error;
