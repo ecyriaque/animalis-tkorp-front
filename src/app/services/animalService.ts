@@ -90,6 +90,23 @@ export const AnimalService = {
     }
   },
 
+  //get animal by ownerId
+  async getAnimalsByOwnerId(ownerId: number): Promise<Animal[]> {
+    const query = `
+      query {
+        animalsByOwnerId(ownerId: ${ownerId}) {
+          id
+          name
+          species
+          weight
+        }
+      }
+    `;
+
+    const response = await axios.post(this.apiUrl, { query });
+    return response.data.data.animalsByOwnerId;
+  }
+
   // Create a new animal
   async createAnimal(
     animal: Animal
