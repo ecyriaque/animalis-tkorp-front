@@ -98,14 +98,15 @@ export const AnimalService = {
           id
           name
           species
+          breed
           weight
         }
       }
     `;
 
-    const response = await axios.post(this.apiUrl, { query });
+    const response = await axios.post(`${API_URL}/graphql`, { query });
     return response.data.data.animalsByOwnerId;
-  }
+  },
 
   // Create a new animal
   async createAnimal(
