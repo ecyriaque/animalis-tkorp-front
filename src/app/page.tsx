@@ -84,7 +84,7 @@ export default function Home() {
               <CardMedia
                 component="img"
                 height="100"
-                image={AnimalService.getAnimalImageUrl(oldestAnimal.species)}
+                image={AnimalService.getImage(oldestAnimal.species)}
                 alt={oldestAnimal.species}
                 style={{
                   borderRadius: "50%",
@@ -120,7 +120,7 @@ export default function Home() {
               <CardMedia
                 component="img"
                 height="100"
-                image={AnimalService.getAnimalImageUrl(popularSpecies)}
+                image={AnimalService.getImage(popularSpecies)}
                 alt={popularSpecies}
                 style={{
                   borderRadius: "50%",

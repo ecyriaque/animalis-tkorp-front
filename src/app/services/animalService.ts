@@ -193,6 +193,6 @@ export const AnimalService = {
       return speciesImages[randomIndex];
     }
 
-    return "Aucune image disponible pour cette espèce.";
+    return "No images";
   },
 };
