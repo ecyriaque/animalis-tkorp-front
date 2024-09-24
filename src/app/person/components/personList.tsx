@@ -17,6 +17,7 @@ import {
   Toolbar,
   Pagination, // Importing Pagination component
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 interface Person {
   id: string;
@@ -34,7 +35,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
-
+  const router = useRouter();
   // Handle changes in the search input
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -73,7 +74,17 @@ export default function PersonList({ persons = [] }: PersonListProps) {
   const renderPerson = (person: Person) => {
     return (
       <Grid item key={person.id} xs={12} sm={6} md={4} lg={3}>
-        <Card>
+        <Card
+          style={{
+            cursor: "grab",
+            transition: "transform 0.3s",
+            "&:hover": {
+              transform: "scale(1.05)",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+            },
+          }}
+          onClick={() => router.push(`/person/${person.id}`)}
+        >
           <CardMedia
             component="img"
             height="140"
@@ -84,17 +95,6 @@ export default function PersonList({ persons = [] }: PersonListProps) {
             <Typography variant="h6" component="div">
               {`${person.firstName} ${person.lastName}`}
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                console.log(
-                  `Details for ${person.firstName} ${person.lastName}`
-                )
-              }
-            >
-              Show details
-            </Button>
           </CardContent>
         </Card>
       </Grid>

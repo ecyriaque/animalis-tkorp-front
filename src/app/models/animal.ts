@@ -4,7 +4,7 @@ export class Animal {
   species: string;
   color: string;
   breed: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   ownerId: number;
   weight: number;
 
@@ -13,7 +13,7 @@ export class Animal {
     this.name = data.name;
     this.color = data.color;
     this.breed = data.breed;
-    this.dateOfBirth = data.dateOfBirth;
+    this.dateOfBirth = new Date(data.dateOfBirth);
     this.weight = data.weight;
     this.species = data.species;
     this.ownerId = data.ownerId || data.owner.id;

@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          My Application
+          Animalis
         </Typography>
         <Button color="inherit" onClick={() => router.push("/")}>
           Home
