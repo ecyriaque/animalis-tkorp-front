@@ -1,33 +1,26 @@
 "use client";
 
 import React from "react";
-import { Menubar } from "primereact/menubar";
+import { AppBar, Toolbar, Button, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const Navbar: React.FC = () => {
   const router = useRouter();
 
-  const items = [
-    {
-      label: "Home",
-      icon: "pi pi-fw pi-home",
-      command: () => {
-        router.push("/");
-      },
-    },
-    {
-      label: "Owner",
-      icon: "pi pi-fw pi-users",
-      command: () => {
-        router.push("/person");
-      },
-    },
-  ];
-
   return (
-    <div>
-      <Menubar model={items} />
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          My Application
+        </Typography>
+        <Button color="inherit" onClick={() => router.push("/")}>
+          Home
+        </Button>
+        <Button color="inherit" onClick={() => router.push("/person")}>
+          Owner
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 

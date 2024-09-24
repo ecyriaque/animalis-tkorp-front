@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card } from "primereact/card";
-import { Button } from "primereact/button";
-import { Divider } from "primereact/divider";
-import { Tag } from "primereact/tag";
-import { ProgressSpinner } from "primereact/progressspinner"; // Import du spinner
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+  Divider,
+  CircularProgress,
+  Grid,
+} from "@mui/material";
 
 import { Animal } from "./models/animal";
 import { AnimalService } from "./services/animalService";
@@ -21,7 +26,7 @@ export default function Home() {
     null
   );
   const [mostAnimalsPerson, setMostAnimalsPerson] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true); // État pour suivre le chargement
+  const [loading, setLoading] = useState(true); // State to track loading
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,127 +55,154 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="p-grid p-justify-center" style={{ marginTop: "5rem" }}>
-        <ProgressSpinner />
+      <div
+        style={{ marginTop: "5rem", display: "flex", justifyContent: "center" }}
+      >
+        <CircularProgress />
       </div>
     );
   }
 
   return (
-    <div className="p-grid p-justify-center" style={{ gap: "2rem" }}>
+    <Grid container spacing={4} justifyContent="center">
       {/* Section for the oldest animal */}
-      <div className="p-col-12 p-md-6">
+      <Grid item xs={12} md={6}>
         {oldestAnimal && (
           <Card
-            title="Oldest Animal"
-            className="p-shadow-3"
+            elevation={3}
             style={{ textAlign: "center", marginBottom: "2rem" }}
           >
-            <Tag
-              value={`${oldestAnimal.species}`}
-              severity="info"
-              style={{ marginBottom: "1rem" }}
-            />
-
-            <h3>{oldestAnimal.name}</h3>
-
-            <img
-              src={AnimalService.getAnimalImageUrl(oldestAnimal.species)}
-              alt={oldestAnimal.species}
-              style={{
-                width: "150px",
-                height: "150px",
-                objectFit: "cover",
-                borderRadius: "50%",
-                marginBottom: "1rem",
-              }}
-            />
-            <p style={{ marginTop: "1rem" }}>
-              Date of birth:{" "}
-              {new Date(oldestAnimal.dateOfBirth).toLocaleDateString("en-US")}
-            </p>
-            <Button
-              label="Details"
-              icon="pi pi-info"
-              className="p-button-rounded p-button-outlined p-mt-2"
-            />
+            <CardContent>
+              <Typography variant="h5">Oldest Animal</Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                style={{ marginBottom: "1rem" }}
+              >
+                {oldestAnimal.species}
+              </Typography>
+              <CardMedia
+                component="img"
+                height="100"
+                image={AnimalService.getAnimalImageUrl(oldestAnimal.species)}
+                alt={oldestAnimal.species}
+                style={{
+                  borderRadius: "50%",
+                  marginBottom: "1rem",
+                }}
+              />
+              <Typography variant="h6">{oldestAnimal.name}</Typography>
+              <Typography style={{ marginTop: "1rem" }}>
+                Date of birth:{" "}
+                {new Date(oldestAnimal.dateOfBirth).toLocaleDateString("en-US")}
+              </Typography>
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ marginTop: "1rem" }}
+              >
+                Details
+              </Button>
+            </CardContent>
           </Card>
         )}
-      </div>
+      </Grid>
 
       {/* Section for the most popular species */}
-      <div className="p-col-12 p-md-6">
+      <Grid item xs={12} md={6}>
         {popularSpecies && (
           <Card
-            title="Most Popular Species"
-            subTitle={popularSpecies}
-            className="p-shadow-3"
-            style={{ textAlign: "center" }}
+            elevation={3}
+            style={{ textAlign: "center", marginBottom: "2rem" }}
           >
-            <img
-              src={AnimalService.getAnimalImageUrl(popularSpecies)}
-              alt={popularSpecies}
-              style={{
-                width: "150px",
-                height: "150px",
-                objectFit: "cover",
-                borderRadius: "50%",
-                marginBottom: "1rem",
-              }}
-            />
-            <p>This is the most common species in our database.</p>
+            <CardContent>
+              <Typography variant="h5">Most Popular Species</Typography>
+              <CardMedia
+                component="img"
+                height="100"
+                image={AnimalService.getAnimalImageUrl(popularSpecies)}
+                alt={popularSpecies}
+                style={{
+                  borderRadius: "50%",
+                  marginBottom: "1rem",
+                }}
+              />
+              <Typography variant="body2">
+                This is the most common species in our database.
+              </Typography>
+            </CardContent>
           </Card>
         )}
-      </div>
+      </Grid>
 
-      <Divider />
+      <Divider style={{ width: "100%", margin: "2rem 0" }} />
 
       {/* Section for the person with the heaviest animal */}
-      <div className="p-col-12 p-md-6">
+      <Grid item xs={12} md={6}>
         {heaviestAnimalPerson && (
           <Card
-            title="Person with the Heaviest Animal"
-            subTitle={`${heaviestAnimalPerson.firstName} ${heaviestAnimalPerson.lastName}`}
-            className="p-shadow-3"
+            elevation={3}
             style={{ textAlign: "center", marginBottom: "2rem" }}
           >
-            <p>
-              Animal: {heaviestAnimalPerson.animalName}, Weight:{" "}
-              {heaviestAnimalPerson.weight} kg
-            </p>
+            <CardContent>
+              <Typography variant="h5">
+                Person with the Heaviest Animal
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {heaviestAnimalPerson.firstName} {heaviestAnimalPerson.lastName}
+              </Typography>
+              <Typography>
+                Animal: {heaviestAnimalPerson.animalName}, Weight:{" "}
+                {heaviestAnimalPerson.weight} kg
+              </Typography>
+            </CardContent>
           </Card>
         )}
-      </div>
+      </Grid>
 
       {/* Section for the person with the heaviest group of animals */}
-      <div className="p-col-12 p-md-6">
+      <Grid item xs={12} md={6}>
         {heaviestGroupPerson && (
           <Card
-            title="Person with the Heaviest Group of Animals"
-            subTitle={`${heaviestGroupPerson.firstName} ${heaviestGroupPerson.lastName}`}
-            className="p-shadow-3"
+            elevation={3}
             style={{ textAlign: "center", marginBottom: "2rem" }}
           >
-            <p>Total weight: {heaviestGroupPerson.totalWeight} kg</p>
+            <CardContent>
+              <Typography variant="h5">
+                Person with the Heaviest Group of Animals
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {heaviestGroupPerson.firstName} {heaviestGroupPerson.lastName}
+              </Typography>
+              <Typography>
+                Total weight: {heaviestGroupPerson.totalWeight} kg
+              </Typography>
+            </CardContent>
           </Card>
         )}
-      </div>
+      </Grid>
 
-      <Divider />
+      <Divider style={{ width: "100%", margin: "2rem 0" }} />
 
       {/* Section for the person with the most animals */}
-      <div className="p-col-12 p-md-6">
+      <Grid item xs={12} md={6}>
         {mostAnimalsPerson && (
           <Card
-            title="Person with the Most Animals"
-            subTitle={`${mostAnimalsPerson.firstName} ${mostAnimalsPerson.lastName}`}
-            className="p-shadow-3"
+            elevation={3}
             style={{ textAlign: "center", marginBottom: "2rem" }}
           >
-            <p>Number of animals: {mostAnimalsPerson.animalCount}</p>
+            <CardContent>
+              <Typography variant="h5">Person with the Most Animals</Typography>
+              <Typography variant="body2" color="textSecondary">
+                {mostAnimalsPerson.firstName} {mostAnimalsPerson.lastName}
+              </Typography>
+              <Typography>
+                Number of animals: {mostAnimalsPerson.animalCount}
+              </Typography>
+            </CardContent>
           </Card>
         )}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 }
