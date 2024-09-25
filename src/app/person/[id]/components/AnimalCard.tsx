@@ -66,7 +66,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
       </Typography>
       <Button
         variant="contained"
-        sx={{ mt: 2 }}
+        sx={{ mt: 2, mr: 2 }}
         onClick={() => console.log("View details for", animal.id)}
       >
         View Details
