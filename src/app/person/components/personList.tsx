@@ -15,9 +15,10 @@ import {
   Select,
   AppBar,
   Toolbar,
-  Pagination, // Importing Pagination component
+  Pagination,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import CreatePersonModal from "./CreatePersonModal"; // Assurez-vous que le chemin est correct
 
 interface Person {
   id: string;
@@ -36,18 +37,17 @@ export default function PersonList({ persons = [] }: PersonListProps) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
   const router = useRouter();
-  // Handle changes in the search input
+  const [modalOpen, setModalOpen] = useState(false); // État pour le modal
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    setPage(1); // Reset page to 1 when searching
+    setPage(1);
   };
 
-  // Handle changes in the sort order
   const handleSortChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSortOrder(event.target.value as string);
   };
 
-  // Filter and sort persons based on search term and sort order
   const filteredPersons = persons
     .filter(
       (person) =>
@@ -61,16 +61,12 @@ export default function PersonList({ persons = [] }: PersonListProps) {
       return sortOrder === "asc" ? comparison : -comparison;
     });
 
-  // Calculate total number of pages
   const totalPages = Math.ceil(filteredPersons.length / itemsPerPage);
-
-  // Get persons to display for the current page
   const paginatedPersons = filteredPersons.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
 
-  // Render individual person card
   const renderPerson = (person: Person) => {
     return (
       <Grid item key={person.id} xs={12} sm={6} md={4} lg={3}>
@@ -121,7 +117,15 @@ export default function PersonList({ persons = [] }: PersonListProps) {
         </Toolbar>
       </AppBar>
       <Typography variant="h4" gutterBottom style={{ marginTop: "20px" }}>
-        List of Owners
+        List of Owners{" "}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setModalOpen(true)} // Ouvrir le modal
+          style={{ marginLeft: "20px" }}
+        >
+          Add a Owner
+        </Button>
       </Typography>
       <Grid container spacing={2}>
         {paginatedPersons.map(renderPerson)}
@@ -133,6 +137,8 @@ export default function PersonList({ persons = [] }: PersonListProps) {
         color="primary"
         style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
       />
+      <CreatePersonModal open={modalOpen} onClose={() => setModalOpen(false)} />{" "}
+      {/* Intégration du modal */}
     </div>
   );
 }
