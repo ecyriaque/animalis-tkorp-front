@@ -1,10 +1,6 @@
-// AnimalCard.tsx
 "use client";
 
-import { Card, Typography, Avatar, Button } from "@mui/material";
-import CategoryIcon from "@mui/icons-material/Category";
-import WeightIcon from "@mui/icons-material/FitnessCenter";
-import DateRangeIcon from "@mui/icons-material/DateRange";
+import { Card, Typography, Button } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AnimalService } from "@/app/services/animalService";
@@ -16,9 +12,6 @@ interface AnimalCardProps {
     id: number;
     name: string;
     species: string;
-    weight: number;
-    breed: string;
-    dateOfBirth: string;
   };
   onDelete: (id: number) => void;
 }
@@ -71,17 +64,13 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
       <Typography color="primary">
         <PetsIcon fontSize="small" /> {animal.species}
       </Typography>
-      <Typography variant="body2">
-        <WeightIcon fontSize="small" /> Weight: {animal.weight} kg
-      </Typography>
-      <Typography variant="body2">
-        <CategoryIcon fontSize="small" />
-        Breed: {animal.breed}
-      </Typography>
-      <Typography variant="body2">
-        <DateRangeIcon fontSize="small" /> Date of Birth:{" "}
-        {animal.dateOfBirth.split("T")[0]}
-      </Typography>
+      <Button
+        variant="contained"
+        sx={{ mt: 2 }}
+        onClick={() => console.log("View details for", animal.id)}
+      >
+        View Details
+      </Button>
       <Button
         variant="contained"
         color="error"
