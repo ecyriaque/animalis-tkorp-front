@@ -144,9 +144,9 @@ export const AnimalService = {
 
   // Create a new animal
   async createAnimal(
-    animalData: Omit<CreateAnimalDto, "constructor"> // Utilisation de Omit pour éviter d'inclure le constructeur
+    animalData: Omit<CreateAnimalDto, "constructor">
   ): Promise<{ message: string; animal: Animal }> {
-    const animalDto = new CreateAnimalDto(animalData); // Créer une instance du DTO
+    const animalDto = new CreateAnimalDto(animalData);
     try {
       const response = await axios.post(`${API_URL}/animal`, animalDto);
       return {
@@ -164,7 +164,7 @@ export const AnimalService = {
     id: number,
     animalData: Partial<Omit<UpdateAnimalDto, "constructor">>
   ): Promise<{ message: string; animal: Animal }> {
-    const animalDto = new UpdateAnimalDto(animalData); // Créer une instance du DTO
+    const animalDto = new UpdateAnimalDto(animalData);
     try {
       const response = await axios.put(`${API_URL}/animal/${id}`, animalDto);
       return {
