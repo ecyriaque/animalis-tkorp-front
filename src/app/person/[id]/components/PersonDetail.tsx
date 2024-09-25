@@ -122,7 +122,7 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
               backgroundColor: "#F5F5DC",
               padding: 3,
               borderRadius: 3,
-              width: "100%",
+              width: { xs: "90%", sm: "70%", md: "50%" },
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -133,8 +133,10 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
               src="/images/person.jpeg"
               sx={{ width: 80, height: 80, marginBottom: 2 }}
             />
+
             <Box
               display="flex"
+              flexDirection={{ xs: "column", sm: "row" }}
               justifyContent="center"
               alignItems="center"
               mb={2}
