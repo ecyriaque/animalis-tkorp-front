@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import ThemeWrapper from "./components/ThemeWrapper";
 import { SnackbarProvider } from "./components/Snackbar";
+import { ConfirmationDialogProvider } from "./components/ConfirmationDialog";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,8 +34,10 @@ export default function RootLayout({
       >
         <ThemeWrapper>
           <SnackbarProvider>
-            <Navbar />
-            {children}
+            <ConfirmationDialogProvider>
+              <Navbar />
+              {children}
+            </ConfirmationDialogProvider>
           </SnackbarProvider>
         </ThemeWrapper>
       </body>

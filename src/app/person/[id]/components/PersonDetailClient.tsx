@@ -22,6 +22,8 @@ import { Person } from "@/app/models/person";
 import { Animal } from "@/app/models/animal";
 import AddAnimalModal from "./AddAnimalModal";
 import React, { useState } from "react";
+import { useConfirmationDialog } from "@/app/components/ConfirmationDialog";
+import { useSnackbar } from "@/app/components/Snackbar";
 
 interface PersonDetailClientProps {
   person: Person;
@@ -29,6 +31,9 @@ interface PersonDetailClientProps {
 
 const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   const [open, setOpen] = useState(false);
+  const { openConfirmationDialog } = useConfirmationDialog();
+  const { openSnackbar } = useSnackbar();
+
   const [animals, setAnimals] = useState(person.animals);
 
   const handleAddAnimal = (newAnimal: Animal) => {
@@ -37,14 +42,21 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   };
 
   const handleDeleteAnimal = async (animalId: number) => {
-    try {
-      await AnimalService.deleteAnimal(animalId);
-      setAnimals((prevAnimals) =>
-        prevAnimals.filter((animal) => animal.id !== animalId)
-      );
-    } catch (error) {
-      console.error("Failed to delete animal:", error);
-    }
+    openConfirmationDialog(
+      "Confirm the deletion",
+      "Are you sure you want to remove this animal ?",
+      async () => {
+        try {
+          const response = await AnimalService.deleteAnimal(animalId);
+          setAnimals((prevAnimals) =>
+            prevAnimals.filter((animal) => animal.id !== animalId)
+          );
+          openSnackbar(response.message, "success");
+        } catch (error) {
+          console.error("Failed to delete animal:", error);
+        }
+      }
+    );
   };
 
   return (
