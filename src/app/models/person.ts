@@ -5,7 +5,7 @@ export class Person {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
   animals: Animal[];
 
   constructor(data: any) {

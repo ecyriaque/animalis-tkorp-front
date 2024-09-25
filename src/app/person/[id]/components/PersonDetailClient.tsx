@@ -2,19 +2,21 @@
 
 import {
   Card,
-  CardContent,
   Typography,
   Avatar,
   Grid,
   Box,
   Button,
+  TextField,
+  IconButton,
 } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
 import React, { useState } from "react";
 import { Person } from "@/app/models/person";
 import AddAnimalModal from "./AddAnimalModal";
@@ -24,6 +26,8 @@ import { useConfirmationDialog } from "@/app/components/ConfirmationDialog";
 import { useSnackbar } from "@/app/components/Snackbar";
 import PersonService from "@/app/services/personService";
 import { useRouter } from "next/navigation";
+import { UpdatePersonDto } from "@/app/DTO/UpdatePerson.dto";
+import { Grid3x3 } from "@mui/icons-material";
 
 interface PersonDetailClientProps {
   person: Person;
@@ -32,6 +36,18 @@ interface PersonDetailClientProps {
 const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   const [open, setOpen] = useState(false);
   const [animals, setAnimals] = useState(person.animals);
+  const [isEditingFirstName, setIsEditingFirstName] = useState(false);
+  const [isEditingLastName, setIsEditingLastName] = useState(false);
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [isEditingPhoneNumber, setIsEditingPhoneNumber] = useState(false);
+
+  const [editedFirstName, setEditedFirstName] = useState(person.firstName);
+  const [editedLastName, setEditedLastName] = useState(person.lastName);
+  const [editedEmail, setEditedEmail] = useState(person.email);
+  const [editedPhoneNumber, setEditedPhoneNumber] = useState(
+    person.phoneNumber
+  );
+
   const { openConfirmationDialog } = useConfirmationDialog();
   const { openSnackbar } = useSnackbar();
   const router = useRouter();
@@ -48,7 +64,6 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   };
 
   const handleDeletePerson = () => {
-    console.log(animals);
     openConfirmationDialog(
       "Confirm the deletion",
       `Are you sure you want to remove ${person.firstName} ${person.lastName}?`,
@@ -64,6 +79,31 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
     );
   };
 
+  const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
+  const phoneRegex = /^[0-9-]*$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleSaveChanges = async () => {
+    if (!emailRegex.test(editedEmail)) {
+      openSnackbar("Invalid email format", "error");
+      return;
+    }
+
+    const updateData = new UpdatePersonDto({
+      firstName: editedFirstName,
+      lastName: editedLastName,
+      email: editedEmail,
+      phoneNumber: editedPhoneNumber,
+    });
+
+    await PersonService.updatePerson(person.id, updateData);
+    setIsEditingFirstName(false);
+    setIsEditingLastName(false);
+    setIsEditingEmail(false);
+    setIsEditingPhoneNumber(false);
+    openSnackbar("Changes saved", "success");
+  };
+
   return (
     <Grid
       container
@@ -77,55 +117,178 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
     >
       <Card sx={{ width: "100%", padding: 3, borderRadius: 3 }}>
         <Grid container direction="column" alignItems="center">
-          <Avatar sx={{ bgcolor: "#4CAF50", width: 80, height: 80 }}>
-            <AccountCircleIcon style={{ fontSize: 60 }} />
-          </Avatar>
-
-          <Typography
-            variant="h4"
-            component="div"
-            sx={{ mt: 2, fontWeight: "bold" }}
-          >
-            {person.firstName} {person.lastName}
-          </Typography>
-
-          <CardContent>
-            <Typography variant="body1">
-              <AlternateEmailIcon fontSize="small" /> Email: {person.email}
-            </Typography>
-            {person.phoneNumber && (
-              <Typography variant="body1">
-                <PhoneIcon fontSize="small" /> Phone: {person.phoneNumber}
-              </Typography>
-            )}
-          </CardContent>
-
           <Box
             sx={{
+              backgroundColor: "#F5F5DC",
+              padding: 3,
+              borderRadius: 3,
+              width: "100%",
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
               alignItems: "center",
-              mt: 2,
             }}
           >
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditIcon />}
-              sx={{ mx: 1 }}
-              onClick={() => console.log("Edit person")}
+            <Avatar
+              alt="Person"
+              src="/images/person.jpeg"
+              sx={{ width: 80, height: 80, marginBottom: 2 }}
+            />
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              mb={2}
             >
-              Edit
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<DeleteIcon />}
-              sx={{ mx: 1 }}
-              onClick={handleDeletePerson}
+              {/* First Name */}
+              <Box display="flex" alignItems="center" mr={2}>
+                {!isEditingFirstName ? (
+                  <>
+                    <Typography variant="h5">{editedFirstName}</Typography>
+                    <IconButton onClick={() => setIsEditingFirstName(true)}>
+                      <EditIcon />
+                    </IconButton>
+                  </>
+                ) : (
+                  <>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={editedFirstName}
+                      onChange={(e) => {
+                        if (nameRegex.test(e.target.value)) {
+                          setEditedFirstName(e.target.value);
+                        }
+                      }}
+                    />
+                    <IconButton onClick={handleSaveChanges}>
+                      <SaveIcon />
+                    </IconButton>
+                  </>
+                )}
+              </Box>
+
+              {/* Last Name */}
+              <Box display="flex" alignItems="center">
+                {!isEditingLastName ? (
+                  <>
+                    <Typography variant="h5">{editedLastName}</Typography>
+                    <IconButton onClick={() => setIsEditingLastName(true)}>
+                      <EditIcon />
+                    </IconButton>
+                  </>
+                ) : (
+                  <>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={editedLastName}
+                      onChange={(e) => {
+                        if (nameRegex.test(e.target.value)) {
+                          setEditedLastName(e.target.value);
+                        }
+                      }}
+                    />
+                    <IconButton onClick={handleSaveChanges}>
+                      <SaveIcon />
+                    </IconButton>
+                  </>
+                )}
+              </Box>
+            </Box>
+
+            {/* Email */}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              mb={2}
             >
-              Delete
-            </Button>
+              {!isEditingEmail ? (
+                <>
+                  <Typography variant="body1">
+                    <AlternateEmailIcon fontSize="small" /> Email: {editedEmail}
+                  </Typography>
+                  <IconButton onClick={() => setIsEditingEmail(true)}>
+                    <EditIcon />
+                  </IconButton>
+                </>
+              ) : (
+                <>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    value={editedEmail}
+                    onChange={(e) => setEditedEmail(e.target.value)}
+                    error={!emailRegex.test(editedEmail)}
+                    helperText={
+                      !emailRegex.test(editedEmail)
+                        ? "Invalid email format"
+                        : ""
+                    }
+                  />
+                  <IconButton onClick={handleSaveChanges}>
+                    <SaveIcon />
+                  </IconButton>
+                </>
+              )}
+            </Box>
+
+            {/* Phone Number */}
+            {person.phoneNumber && (
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                mb={2}
+              >
+                {!isEditingPhoneNumber ? (
+                  <>
+                    <Typography variant="body1">
+                      <PhoneIcon fontSize="small" /> Phone: {editedPhoneNumber}
+                    </Typography>
+                    <IconButton onClick={() => setIsEditingPhoneNumber(true)}>
+                      <EditIcon />
+                    </IconButton>
+                  </>
+                ) : (
+                  <>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={editedPhoneNumber}
+                      onChange={(e) => {
+                        if (phoneRegex.test(e.target.value)) {
+                          setEditedPhoneNumber(e.target.value);
+                        }
+                      }}
+                    />
+                    <IconButton onClick={handleSaveChanges}>
+                      <SaveIcon />
+                    </IconButton>
+                  </>
+                )}
+              </Box>
+            )}
+
+            {/* Delete Button */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                mt: 2,
+              }}
+            >
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<DeleteIcon />}
+                sx={{ mx: 1 }}
+                onClick={handleDeletePerson}
+              >
+                Delete
+              </Button>
+            </Box>
           </Box>
         </Grid>
 
@@ -133,37 +296,26 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
           sx={{
             mt: 4,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
           }}
         >
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              mr: 2,
-            }}
-          >
-            My Animals
-          </Typography>
           <Button
             variant="contained"
+            color="secondary"
+            startIcon={<AddIcon />}
             onClick={() => setOpen(true)}
-            sx={{ ml: 2 }}
           >
-            <AddIcon /> Add Animal
+            Add Animal
           </Button>
-        </Box>
 
-        <AddAnimalModal
-          open={open}
-          handleClose={() => setOpen(false)}
-          ownerId={person.id}
-          onAddAnimal={handleAddAnimal}
-        />
+          <AddAnimalModal
+            open={open}
+            handleClose={() => setOpen(false)}
+            ownerId={person.id}
+            onAddAnimal={handleAddAnimal}
+          />
+        </Box>
 
         <Grid container spacing={2} sx={{ mt: 2 }}>
           {animals.map((animal) => (

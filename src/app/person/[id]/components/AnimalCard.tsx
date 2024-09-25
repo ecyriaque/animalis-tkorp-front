@@ -59,10 +59,10 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
         }}
       />
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-        {animal.name}
+        Hi my name is {animal.name}
       </Typography>
       <Typography color="primary">
-        <PetsIcon fontSize="small" /> {animal.species}
+        <PetsIcon fontSize="small" /> i'm a {animal.species}
       </Typography>
       <Button
         variant="contained"
