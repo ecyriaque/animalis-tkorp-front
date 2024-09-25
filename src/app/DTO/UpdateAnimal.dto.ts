@@ -6,6 +6,7 @@ export class UpdateAnimalDto {
   color?: string;
   dateOfBirth?: string;
   breed?: string;
+  ownerId?: number;
 
   constructor(data: Partial<Omit<UpdateAnimalDto, "constructor">>) {
     if (data.name) this.name = data.name;
@@ -14,5 +15,6 @@ export class UpdateAnimalDto {
     if (data.color) this.color = data.color;
     if (data.dateOfBirth) this.dateOfBirth = data.dateOfBirth;
     if (data.breed) this.breed = data.breed;
+    if (data.ownerId) this.ownerId = data.ownerId;
   }
 }

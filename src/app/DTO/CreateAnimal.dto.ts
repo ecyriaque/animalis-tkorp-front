@@ -5,6 +5,7 @@ export class CreateAnimalDto {
   color: string;
   dateOfBirth: Date;
   breed: string;
+  ownerId: number;
 
   constructor(data: Omit<CreateAnimalDto, "constructor">) {
     this.name = data.name;
@@ -13,5 +14,6 @@ export class CreateAnimalDto {
     this.color = data.color;
     this.dateOfBirth = data.dateOfBirth;
     this.breed = data.breed;
+    this.ownerId = data.ownerId;
   }
 }
