@@ -13,9 +13,9 @@ export class Animal {
     this.name = data.name;
     this.color = data.color;
     this.breed = data.breed;
-    this.dateOfBirth = new Date(data.dateOfBirth);
+    this.dateOfBirth = new Date(data.dateOfBirth).toDateString();
     this.weight = data.weight;
     this.species = data.species;
-    this.ownerId = data.ownerId || data.owner.id;
+    this.ownerId = data.ownerId;
   }
 }

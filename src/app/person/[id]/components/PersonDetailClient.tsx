@@ -17,18 +17,14 @@ import PetsIcon from "@mui/icons-material/Pets";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Person } from "@/app/models/person";
-import { Animal } from "@/app/models/animal";
+
 import React from "react";
 
 interface PersonDetailClientProps {
   person: Person;
-  animals: Animal[];
 }
 
-const PersonDetailClient: React.FC<PersonDetailClientProps> = ({
-  person,
-  animals,
-}) => {
+const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   return (
     <Grid
       container
@@ -76,7 +72,7 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({
             My Animals
           </Typography>
           <Grid container spacing={2} sx={{ mt: 2 }}>
-            {animals.map((animal) => (
+            {person.animals.map((animal) => (
               <Grid item xs={12} sm={6} md={4} key={animal.id}>
                 <Card
                   sx={{

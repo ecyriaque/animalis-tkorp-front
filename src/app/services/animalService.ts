@@ -119,7 +119,7 @@ export const AnimalService = {
     }
   },
 
-  //get animal by ownerId
+  //get animals by ownerId
   async getAnimalsByOwnerId(ownerId: number): Promise<Animal[]> {
     const query = `
       query {
@@ -136,7 +136,7 @@ export const AnimalService = {
     `;
 
     const response = await axios.post(`${API_URL}/graphql`, { query });
-    console.log(response);
+
     return response.data.data.animalsByOwnerId;
   },
 
