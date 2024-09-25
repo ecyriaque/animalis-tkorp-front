@@ -12,6 +12,11 @@ const images: { [key: string]: string[] } = {
     "/images/cat/cat3.jpeg",
     "/images/cat/cat4.jpeg",
     "/images/cat/cat5.jpeg",
+    "/images/cat/cat6.jpeg",
+    "/images/cat/cat7.jpeg",
+    "/images/cat/cat8.jpeg",
+    "/images/cat/cat9.jpeg",
+    "/images/cat/cat10.jpeg",
   ],
   dog: [
     "/images/dog/dog1.jpeg",
@@ -19,6 +24,11 @@ const images: { [key: string]: string[] } = {
     "/images/dog/dog3.jpeg",
     "/images/dog/dog4.jpeg",
     "/images/dog/dog5.jpeg",
+    "/images/dog/dog6.jpeg",
+    "/images/dog/dog7.jpeg",
+    "/images/dog/dog8.jpeg",
+    "/images/dog/dog9.jpeg",
+    "/images/dog/dog10.jpeg",
   ],
   bird: [
     "/images/bird/bird1.jpeg",
@@ -26,6 +36,11 @@ const images: { [key: string]: string[] } = {
     "/images/bird/bird3.jpeg",
     "/images/bird/bird4.jpeg",
     "/images/bird/bird5.jpeg",
+    "/images/bird/bird6.jpeg",
+    "/images/bird/bird7.jpeg",
+    "/images/bird/bird8.jpeg",
+    "/images/bird/bird9.jpeg",
+    "/images/bird/bird10.jpeg",
   ],
   hamster: [
     "/images/hamster/hamster1.jpeg",
@@ -33,6 +48,11 @@ const images: { [key: string]: string[] } = {
     "/images/hamster/hamster3.jpeg",
     "/images/hamster/hamster4.jpeg",
     "/images/hamster/hamster5.jpeg",
+    "/images/hamster/hamster6.jpeg",
+    "/images/hamster/hamster7.jpeg",
+    "/images/hamster/hamster8.jpeg",
+    "/images/hamster/hamster9.jpeg",
+    "/images/hamster/hamster10.jpeg",
   ],
   turtle: [
     "/images/turtle/turtle1.jpeg",
@@ -40,6 +60,11 @@ const images: { [key: string]: string[] } = {
     "/images/turtle/turtle3.jpeg",
     "/images/turtle/turtle4.jpeg",
     "/images/turtle/turtle5.jpeg",
+    "/images/turtle/turtle6.jpeg",
+    "/images/turtle/turtle7.jpeg",
+    "/images/turtle/turtle8.jpeg",
+    "/images/turtle/turtle9.jpeg",
+    "/images/turtle/turtle10.jpeg",
   ],
   rabbit: [
     "/images/rabbit/rabbit1.jpeg",
@@ -47,6 +72,11 @@ const images: { [key: string]: string[] } = {
     "/images/rabbit/rabbit3.jpeg",
     "/images/rabbit/rabbit4.jpeg",
     "/images/rabbit/rabbit5.jpeg",
+    "/images/rabbit/rabbit6.jpeg",
+    "/images/rabbit/rabbit7.jpeg",
+    "/images/rabbit/rabbit8.jpeg",
+    "/images/rabbit/rabbit9.jpeg",
+    "/images/rabbit/rabbit10.jpeg",
   ],
 };
 
@@ -196,7 +226,12 @@ export const AnimalService = {
     if (speciesImages) {
       if (animalId !== undefined) {
         const lastDigit = animalId % 10;
-        const imageIndex = lastDigit - 1;
+        let imageIndex = lastDigit - 1;
+
+        // Si l'animalId est 0, on met l'image à l'index 0
+        if (animalId === 0 || imageIndex < 0) {
+          imageIndex = 0;
+        }
 
         if (imageIndex >= 0 && imageIndex < speciesImages.length) {
           return speciesImages[imageIndex];

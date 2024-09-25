@@ -36,13 +36,13 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Position en haut au centre
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleClose}
           severity={severity}
           variant="filled"
-          sx={{ fontSize: "1.5rem", padding: "16px 24px" }} // Ajuster la taille de l'alerte
+          sx={{ fontSize: "1.5rem", padding: "16px 24px" }}
         >
           {message}
         </Alert>
