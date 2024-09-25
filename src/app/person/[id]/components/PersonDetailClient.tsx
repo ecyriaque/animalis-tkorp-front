@@ -17,6 +17,7 @@ import WeightIcon from "@mui/icons-material/FitnessCenter";
 import PetsIcon from "@mui/icons-material/Pets";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import DateRangeIcon from "@mui/icons-material/DateRange";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Person } from "@/app/models/person";
 import { Animal } from "@/app/models/animal";
 import AddAnimalModal from "./AddAnimalModal";
@@ -31,9 +32,19 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   const [animals, setAnimals] = useState(person.animals);
 
   const handleAddAnimal = (newAnimal: Animal) => {
-    console.log("new animal", newAnimal);
     setAnimals((prevAnimals) => [...prevAnimals, newAnimal]);
     setOpen(false);
+  };
+
+  const handleDeleteAnimal = async (animalId: number) => {
+    try {
+      await AnimalService.deleteAnimal(animalId);
+      setAnimals((prevAnimals) =>
+        prevAnimals.filter((animal) => animal.id !== animalId)
+      );
+    } catch (error) {
+      console.error("Failed to delete animal:", error);
+    }
   };
 
   return (
@@ -136,6 +147,15 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
                     <DateRangeIcon fontSize="small" /> Date of Birth:{" "}
                     {animal.dateOfBirth.split("T")[0]}
                   </Typography>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleDeleteAnimal(animal.id)}
+                    sx={{ mt: 2 }}
+                  >
+                    Delete
+                  </Button>
                 </Card>
               </Grid>
             ))}

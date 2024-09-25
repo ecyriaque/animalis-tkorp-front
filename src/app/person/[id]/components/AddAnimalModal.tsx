@@ -39,7 +39,7 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
 
   const allowedSpecies = ["Cat", "Bird", "Rabbit", "Hamster", "Turtle", "Dog"];
 
-  const { openSnackbar } = useSnackbar(); // Utiliser le hook
+  const { openSnackbar } = useSnackbar();
 
   useEffect(() => {
     const fetchImage = () => {
