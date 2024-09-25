@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import {
   Modal,
@@ -13,6 +14,7 @@ import {
 import { AnimalService } from "@/app/services/animalService";
 import { CreateAnimalDto } from "@/app/DTO/CreateAnimal.dto";
 import { Animal } from "@/app/models/animal";
+import { useSnackbar } from "@/app/components/Snackbar";
 
 interface AddAnimalModalProps {
   open: boolean;
@@ -36,6 +38,8 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
   const [image, setImage] = useState<string>("");
 
   const allowedSpecies = ["Cat", "Bird", "Rabbit", "Hamster", "Turtle", "Dog"];
+
+  const { openSnackbar } = useSnackbar(); // Utiliser le hook
 
   useEffect(() => {
     const fetchImage = () => {
@@ -77,8 +81,10 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
 
       onAddAnimal(newAnimal);
       handleClose();
+      openSnackbar(message, "success");
     } catch (error) {
       console.error("Error creating animal:", error);
+      openSnackbar("Error creating animal.", "error");
     }
   };
 
