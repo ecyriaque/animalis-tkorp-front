@@ -13,11 +13,17 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState } from "react";
 import { Person } from "@/app/models/person";
 import AddAnimalModal from "./AddAnimalModal";
 import AnimalCard from "./AnimalCard";
 import { Animal } from "@/app/models/animal";
+import { useConfirmationDialog } from "@/app/components/ConfirmationDialog";
+import { useSnackbar } from "@/app/components/Snackbar";
+import PersonService from "@/app/services/personService";
+import { useRouter } from "next/navigation";
 
 interface PersonDetailClientProps {
   person: Person;
@@ -26,6 +32,9 @@ interface PersonDetailClientProps {
 const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   const [open, setOpen] = useState(false);
   const [animals, setAnimals] = useState(person.animals);
+  const { openConfirmationDialog } = useConfirmationDialog();
+  const { openSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const handleAddAnimal = (newAnimal: Animal) => {
     setAnimals((prevAnimals) => [...prevAnimals, newAnimal]);
@@ -35,6 +44,23 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   const handleDeleteAnimal = (animalId: number) => {
     setAnimals((prevAnimals) =>
       prevAnimals.filter((animal) => animal.id !== animalId)
+    );
+  };
+
+  const handleDeletePerson = () => {
+    console.log(animals);
+    openConfirmationDialog(
+      "Confirm the deletion",
+      `Are you sure you want to remove ${person.firstName} ${person.lastName}?`,
+      async () => {
+        try {
+          const response = await PersonService.deletePerson(person.id);
+          openSnackbar(response.message, "success");
+          router.push("/person");
+        } catch (error) {
+          console.error("Failed to delete person:", error);
+        }
+      }
     );
   };
 
@@ -73,6 +99,34 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
               </Typography>
             )}
           </CardContent>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              mt: 2,
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<EditIcon />}
+              sx={{ mx: 1 }}
+              onClick={() => console.log("Edit person")}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<DeleteIcon />}
+              sx={{ mx: 1 }}
+              onClick={handleDeletePerson}
+            >
+              Delete
+            </Button>
+          </Box>
         </Grid>
 
         <Box
@@ -110,6 +164,7 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
           ownerId={person.id}
           onAddAnimal={handleAddAnimal}
         />
+
         <Grid container spacing={2} sx={{ mt: 2 }}>
           {animals.map((animal) => (
             <Grid item xs={12} sm={6} md={4} key={animal.id}>
