@@ -1,5 +1,7 @@
 import axios from "axios";
 import { Animal } from "../models/animal";
+import { CreateAnimalDto } from "../DTO/CreateAnimal.dto";
+import { UpdateAnimalDto } from "../DTO/UpdateAnimal.dto";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -142,10 +144,11 @@ export const AnimalService = {
 
   // Create a new animal
   async createAnimal(
-    animal: Animal
+    animalData: Omit<CreateAnimalDto, "constructor"> // Utilisation de Omit pour éviter d'inclure le constructeur
   ): Promise<{ message: string; animal: Animal }> {
+    const animalDto = new CreateAnimalDto(animalData); // Créer une instance du DTO
     try {
-      const response = await axios.post(`${API_URL}/animal`, animal);
+      const response = await axios.post(`${API_URL}/animal`, animalDto);
       return {
         message: response.data.message,
         animal: new Animal(response.data.animal),
@@ -159,10 +162,11 @@ export const AnimalService = {
   // Update an existing animal by ID
   async updateAnimal(
     id: number,
-    animal: Animal
+    animalData: Partial<Omit<UpdateAnimalDto, "constructor">>
   ): Promise<{ message: string; animal: Animal }> {
+    const animalDto = new UpdateAnimalDto(animalData); // Créer une instance du DTO
     try {
-      const response = await axios.put(`${API_URL}/animal/${id}`, animal);
+      const response = await axios.put(`${API_URL}/animal/${id}`, animalDto);
       return {
         message: response.data.message,
         animal: new Animal(response.data.animal),
