@@ -149,6 +149,7 @@ export const AnimalService = {
     const animalDto = new CreateAnimalDto(animalData);
     try {
       const response = await axios.post(`${API_URL}/animal`, animalDto);
+      console.log("répond", response);
       return {
         message: response.data.message,
         animal: new Animal(response.data.animal),
@@ -188,13 +189,22 @@ export const AnimalService = {
     }
   },
 
-  getImage(species: string): string {
+  getImage(species: string, animalId?: number): string {
     const speciesLower = species.toLowerCase();
-
     const speciesImages = images[speciesLower];
+
     if (speciesImages) {
-      const randomIndex = Math.floor(Math.random() * speciesImages.length);
-      return speciesImages[randomIndex];
+      if (animalId !== undefined) {
+        const lastDigit = animalId % 10;
+        const imageIndex = lastDigit - 1;
+
+        if (imageIndex >= 0 && imageIndex < speciesImages.length) {
+          return speciesImages[imageIndex];
+        }
+      } else {
+        const randomIndex = Math.floor(Math.random() * speciesImages.length);
+        return speciesImages[randomIndex];
+      }
     }
 
     return "No images";

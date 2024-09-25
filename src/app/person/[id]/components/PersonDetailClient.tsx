@@ -8,6 +8,7 @@ import {
   Avatar,
   Grid,
   Box,
+  Button,
 } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -17,14 +18,24 @@ import PetsIcon from "@mui/icons-material/Pets";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Person } from "@/app/models/person";
-
-import React from "react";
+import { Animal } from "@/app/models/animal";
+import AddAnimalModal from "./AddAnimalModal";
+import React, { useState } from "react";
 
 interface PersonDetailClientProps {
   person: Person;
 }
 
 const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
+  const [open, setOpen] = useState(false);
+  const [animals, setAnimals] = useState(person.animals);
+
+  const handleAddAnimal = (newAnimal: Animal) => {
+    console.log("new animal", newAnimal);
+    setAnimals((prevAnimals) => [...prevAnimals, newAnimal]);
+    setOpen(false);
+  };
+
   return (
     <Grid
       container
@@ -71,8 +82,21 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
           >
             My Animals
           </Typography>
+          <Button
+            variant="contained"
+            onClick={() => setOpen(true)}
+            sx={{ mt: 2 }}
+          >
+            Add Animal
+          </Button>
+          <AddAnimalModal
+            open={open}
+            handleClose={() => setOpen(false)}
+            ownerId={person.id}
+            onAddAnimal={handleAddAnimal}
+          />
           <Grid container spacing={2} sx={{ mt: 2 }}>
-            {person.animals.map((animal) => (
+            {animals.map((animal) => (
               <Grid item xs={12} sm={6} md={4} key={animal.id}>
                 <Card
                   sx={{
@@ -86,7 +110,7 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
                   }}
                 >
                   <img
-                    src={AnimalService.getImage(animal.species)}
+                    src={AnimalService.getImage(animal.species, animal.id)}
                     alt={animal.name}
                     style={{
                       width: "100%",
