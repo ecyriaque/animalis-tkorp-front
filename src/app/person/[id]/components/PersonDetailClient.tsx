@@ -1,4 +1,3 @@
-// PersonDetailClient.tsx
 "use client";
 
 import {
@@ -13,6 +12,7 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneIcon from "@mui/icons-material/Phone";
+import AddIcon from "@mui/icons-material/Add";
 import React, { useState } from "react";
 import { Person } from "@/app/models/person";
 import AddAnimalModal from "./AddAnimalModal";
@@ -75,36 +75,48 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
           </CardContent>
         </Grid>
 
-        <Box sx={{ mt: 4 }}>
+        <Box
+          sx={{
+            mt: 4,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Typography
             variant="h5"
             component="div"
-            align="center"
-            sx={{ fontWeight: "bold" }}
+            sx={{
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              mr: 2,
+            }}
           >
             My Animals
           </Typography>
           <Button
             variant="contained"
             onClick={() => setOpen(true)}
-            sx={{ mt: 2 }}
+            sx={{ ml: 2 }}
           >
-            Add Animal
+            <AddIcon /> Add Animal
           </Button>
-          <AddAnimalModal
-            open={open}
-            handleClose={() => setOpen(false)}
-            ownerId={person.id}
-            onAddAnimal={handleAddAnimal}
-          />
-          <Grid container spacing={2} sx={{ mt: 2 }}>
-            {animals.map((animal) => (
-              <Grid item xs={12} sm={6} md={4} key={animal.id}>
-                <AnimalCard animal={animal} onDelete={handleDeleteAnimal} />
-              </Grid>
-            ))}
-          </Grid>
         </Box>
+
+        <AddAnimalModal
+          open={open}
+          handleClose={() => setOpen(false)}
+          ownerId={person.id}
+          onAddAnimal={handleAddAnimal}
+        />
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          {animals.map((animal) => (
+            <Grid item xs={12} sm={6} md={4} key={animal.id}>
+              <AnimalCard animal={animal} onDelete={handleDeleteAnimal} />
+            </Grid>
+          ))}
+        </Grid>
       </Card>
     </Grid>
   );
