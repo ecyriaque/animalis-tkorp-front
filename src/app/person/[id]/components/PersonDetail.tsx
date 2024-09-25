@@ -33,7 +33,7 @@ interface PersonDetailClientProps {
   person: Person;
 }
 
-const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
+const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
   const [open, setOpen] = useState(false);
   const [animals, setAnimals] = useState(person.animals);
   const [isEditingFirstName, setIsEditingFirstName] = useState(false);
@@ -329,4 +329,4 @@ const PersonDetailClient: React.FC<PersonDetailClientProps> = ({ person }) => {
   );
 };
 
-export default PersonDetailClient;
+export default PersonDetail;

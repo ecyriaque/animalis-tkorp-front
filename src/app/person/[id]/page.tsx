@@ -1,6 +1,6 @@
 import { AnimalService } from "@/app/services/animalService";
 import PersonService from "../../services/personService";
-import PersonDetailClient from "./components/PersonDetailClient";
+import PersonDetail from "./components/PersonDetail";
 import NotFound from "./components/NotFound";
 
 const PersonDetailPage = async ({ params }: { params: { id: string } }) => {
@@ -20,7 +20,7 @@ const PersonDetailPage = async ({ params }: { params: { id: string } }) => {
   const animals = await AnimalService.getAnimalsByOwnerId(personData.id);
   personData.animals = animals;
 
-  return <PersonDetailClient person={personData} />;
+  return <PersonDetail person={personData} />;
 };
 
 export default PersonDetailPage;
