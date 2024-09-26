@@ -85,7 +85,7 @@ export const AnimalService = {
   async getAllAnimals(): Promise<Animal[]> {
     try {
       const response = await axios.get(`${API_URL}/animal`);
-      return response.data.map((item: Animal) => new Animal(item));
+      return response.data;
     } catch (error) {
       console.error("Error fetching all animals:", error);
       throw error;
@@ -96,7 +96,7 @@ export const AnimalService = {
   async getAnimalById(id: number): Promise<Animal> {
     try {
       const response = await axios.get(`${API_URL}/animal/${id}`);
-      return new Animal(response.data);
+      return response.data;
     } catch (error) {
       console.error(`Error fetching animal with ID ${id}:`, error);
       throw error;
