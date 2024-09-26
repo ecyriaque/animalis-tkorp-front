@@ -89,13 +89,14 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
         textAlign: "center",
         borderRadius: 2,
         boxShadow: 3,
+        height: "100vf",
       }}
     >
       <Image
         src={imageUrl}
         alt={localAnimal.name}
-        width={400}
-        height={400}
+        width={350}
+        height={350}
         style={{
           borderRadius: "50%",
           objectFit: "cover",

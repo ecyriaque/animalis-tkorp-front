@@ -146,7 +146,7 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
             <Avatar
               alt="Person"
               src="/images/person.jpeg"
-              sx={{ width: 80, height: 80, marginBottom: 2 }}
+              sx={{ width: 100, height: 100, marginBottom: 2 }}
             />
 
             <Box
