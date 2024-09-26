@@ -114,11 +114,22 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
         backgroundColor: "#E8F5E9",
       }}
     >
-      <Card sx={{ width: "100%", padding: 3, borderRadius: 3 }}>
-        <Grid container direction="column" alignItems="center">
+      <Card
+        sx={{
+          width: "100%",
+          padding: 3,
+          borderRadius: 3,
+        }}
+      >
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          sx={{ backgroundColor: "E8F5E9" }}
+        >
           <Box
             sx={{
-              backgroundColor: "#F5F5DC",
+              backgroundColor: "#E8F5E9",
               padding: 3,
               borderRadius: 3,
               width: { xs: "90%", sm: "70%", md: "50%" },

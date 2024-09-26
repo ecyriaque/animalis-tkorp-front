@@ -49,6 +49,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
         "&:hover": {
           boxShadow: 6,
         },
+        backgroundColor: "#DCDCC6",
       }}
     >
       <Image

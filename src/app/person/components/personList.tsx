@@ -85,7 +85,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
             image="/images/person.jpeg"
             alt={`${person.firstName} ${person.lastName}`}
           />
-          <CardContent>
+          <CardContent sx={{ background: "#DCDCC6" }}>
             <Typography variant="h6" component="div">
               {`${person.firstName} ${person.lastName}`}
             </Typography>
@@ -97,23 +97,21 @@ export default function PersonList({ persons = [] }: PersonListProps) {
 
   return (
     <div style={{ padding: "20px" }}>
-      <AppBar position="static">
-        <Toolbar>
-          <TextField
-            label="Search"
-            variant="outlined"
-            onChange={handleSearchChange}
-            style={{ marginRight: "20px", flexGrow: 1 }}
-          />
-          <FormControl variant="outlined" style={{ minWidth: 120 }}>
-            <InputLabel>Order</InputLabel>
-            <Select value={sortOrder} onChange={handleSortChange} label="Order">
-              <MenuItem value="asc">A-Z</MenuItem>
-              <MenuItem value="desc">Z-A</MenuItem>
-            </Select>
-          </FormControl>
-        </Toolbar>
-      </AppBar>
+      <Toolbar>
+        <TextField
+          label="Search"
+          variant="outlined"
+          onChange={handleSearchChange}
+          style={{ marginRight: "20px", flexGrow: 1 }}
+        />
+        <FormControl variant="outlined" style={{ minWidth: 120 }}>
+          <InputLabel>Order</InputLabel>
+          <Select value={sortOrder} onChange={handleSortChange} label="Order">
+            <MenuItem value="asc">A-Z</MenuItem>
+            <MenuItem value="desc">Z-A</MenuItem>
+          </Select>
+        </FormControl>
+      </Toolbar>
       <Typography variant="h4" gutterBottom style={{ marginTop: "20px" }}>
         List of Owners{" "}
         <Button
