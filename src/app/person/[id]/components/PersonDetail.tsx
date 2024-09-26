@@ -20,7 +20,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useState } from "react";
 import { Person } from "@/app/models/person";
 import AddAnimalModal from "./AddAnimalModal";
-import AnimalCard from "./AnimalCard";
+import AnimalCard from "../../../animal/components/AnimalCard";
 import { Animal } from "@/app/models/animal";
 import { useConfirmationDialog } from "@/app/components/ConfirmationDialog";
 import { useSnackbar } from "@/app/components/Snackbar";

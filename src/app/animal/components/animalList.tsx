@@ -12,7 +12,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import AnimalCard from "@/app/person/[id]/components/AnimalCard";
+import AnimalCard from "@/app/animal/components/AnimalCard";
 import { SelectChangeEvent } from "@mui/material/Select";
 
 interface Animal {
