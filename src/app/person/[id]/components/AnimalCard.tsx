@@ -7,6 +7,7 @@ import { AnimalService } from "@/app/services/animalService";
 import { useConfirmationDialog } from "@/app/components/ConfirmationDialog";
 import { useSnackbar } from "@/app/components/Snackbar";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface AnimalCardProps {
   animal: {
@@ -20,6 +21,7 @@ interface AnimalCardProps {
 const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
   const { openConfirmationDialog } = useConfirmationDialog();
   const { openSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const handleDelete = () => {
     openConfirmationDialog(
@@ -61,15 +63,15 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
       />
 
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-        Hi my name is {animal.name}
+        Name: {animal.name}
       </Typography>
       <Typography color="primary">
-        <PetsIcon fontSize="small" /> I&apos;m a {animal.species}
+        <PetsIcon fontSize="small" /> species: {animal.species}
       </Typography>
       <Button
         variant="contained"
         sx={{ mt: 2, mr: 2 }}
-        onClick={() => console.log("View details for", animal.id)}
+        onClick={() => router.push(`/animal/${animal.id}`)}
       >
         View Details
       </Button>

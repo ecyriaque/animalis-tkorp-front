@@ -19,6 +19,9 @@ const Navbar: React.FC = () => {
         <Button color="inherit" onClick={() => router.push("/person")}>
           Owner
         </Button>
+        <Button color="inherit" onClick={() => router.push("/animal")}>
+          Animal
+        </Button>
       </Toolbar>
     </AppBar>
   );
