@@ -109,7 +109,7 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
         gutterBottom
         sx={{ fontWeight: "bold", color: "#2E7D32" }}
       >
-        Hi, I'm {localAnimal.name}!
+        Hi, I am {localAnimal.name}!
       </Typography>
 
       <Typography
@@ -131,7 +131,7 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
         gutterBottom
         sx={{ fontStyle: "italic", color: "#4CAF50" }}
       >
-        I'm a {localAnimal.species}, and I weigh {localAnimal.weight} kg.
+        I am a {localAnimal.species}, and I weigh {localAnimal.weight} kg.
       </Typography>
 
       <Typography

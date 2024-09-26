@@ -12,7 +12,6 @@ import {
   MenuItem,
   FormControl,
   Select,
-  AppBar,
   Toolbar,
   Pagination,
 } from "@mui/material";

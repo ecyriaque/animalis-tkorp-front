@@ -45,7 +45,7 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({
           variant="filled"
           sx={{ fontSize: "1.5rem", padding: "16px 24px" }}
         >
-          {message} // Message to display in the snackbar
+          {message}
         </Alert>
       </Snackbar>
     </SnackbarContext.Provider>
