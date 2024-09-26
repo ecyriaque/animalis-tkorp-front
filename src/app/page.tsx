@@ -302,7 +302,7 @@ export default function Home() {
               <Button
                 variant="contained"
                 color="primary"
-                sx={{ margin: 1, borderRadius: 2, mt: "25%" }}
+                sx={{ margin: 1, borderRadius: 2, mt: "180px" }}
                 href={`/person/${heaviestGroupPerson.id}`}
               >
                 See the Owner
