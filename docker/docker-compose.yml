@@ -1,0 +1,49 @@
+services:
+  mysql:
+    image: mysql:8.0 
+    container_name: mysql 
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Password for the MySQL root user
+      MYSQL_DATABASE: animalis  # Name of the database to create on initialization
+      MYSQL_USER: adminAnimalis  # Name of a MySQL user to be created
+      MYSQL_PASSWORD: WJAkzemDkxmy2sC  # Password for the created user
+    ports:
+      - "3306:3306" 
+    volumes:
+      - ./mysql-data:/var/lib/mysql  # Volume for MySQL data persistence
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # SQL initialization script to run on startup
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin  # Uses the official phpMyAdmin image
+    container_name: phpmyadmin  # Container name for the phpMyAdmin service
+    environment:
+      PMA_HOST: mysql  # Hostname of the MySQL server that phpMyAdmin should manage
+      PMA_USER: adminAnimalis  # MySQL user to use for connecting to phpMyAdmin
+      PMA_PASSWORD: WJAkzemDkxmy2sC  # Password for the MySQL user
+    ports:
+      - "8080:80"  # Exposes port 80 for phpMyAdmin on port 8080 of the host
+    depends_on:
+      - mysql  # Ensures that the MySQL container is started before phpMyAdmin
+
+  animalis-backend:
+    image: ecyriaque/animalis-tkorp-back  # Docker image for the backend of the application
+    environment:
+      DATABASE_TYPE: mysql  # Type of database used by the backend
+      DATABASE_HOST: mysql  # Hostname of the database (the MySQL service)
+      DATABASE_PORT: 3306  # Port of the database
+      DATABASE_USERNAME: adminAnimalis  # Username for connecting to the database
+      DATABASE_PASSWORD: WJAkzemDkxmy2sC  # Password for the database user
+      DATABASE_NAME: animalis  # Name of the database to be used by the backend
+    depends_on:
+      - mysql  
+    ports:
+      - "3000:3000"  $
+
+  animalis-frontend:
+    image: ecyriaque/animalis-tkorp-front  # Docker image for the frontend of the application
+    environment:
+      NEXT_PUBLIC_API_URL: http://animalis-backend:3000  
+    ports:
+      - "3001:3000"  
+    depends_on:
+      - animalis-backend 
