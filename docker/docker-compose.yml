@@ -37,7 +37,7 @@ services:
     depends_on:
       - mysql  
     ports:
-      - "3000:3000"  $
+      - "3000:3000"
 
   animalis-frontend:
     image: ecyriaque/animalis-tkorp-front  # Docker image for the frontend of the application
