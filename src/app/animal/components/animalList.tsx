@@ -11,6 +11,8 @@ import {
   Pagination,
   Box,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import AnimalCard from "@/app/animal/components/AnimalCard";
 import { SelectChangeEvent } from "@mui/material/Select";
@@ -34,7 +36,11 @@ const AnimalList: React.FC<AnimalListProps> = ({ animals: initialAnimals }) => {
   const [sortByDate, setSortByDate] = useState(""); // For sorting by date
   const [sortByWeight, setSortByWeight] = useState(""); // For sorting by weight
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
-  const animalsPerPage = 6;
+
+  const theme = useTheme();
+  const isXL = useMediaQuery(theme.breakpoints.up("xl"));
+  const isLG = useMediaQuery(theme.breakpoints.up("lg"));
+  const animalsPerPage = isXL ? 9 : isLG ? 6 : 3;
 
   // Filter animals based on search bar and species filter
   const filteredAnimals = animals.filter(
