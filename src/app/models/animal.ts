@@ -1,12 +1,12 @@
 export class Animal {
-  id: number;
-  name: string;
-  species: string;
-  color: string;
-  breed: string;
-  dateOfBirth: string;
-  ownerId: number;
-  weight: number;
+  id: number; // Unique identifier for the animal
+  name: string; // Name of the animal
+  species: string; // Species of the animal (e.g., dog, cat)
+  color: string; // Color of the animal
+  breed: string; // Breed of the animal
+  dateOfBirth: string; // Date of birth in string format
+  ownerId: number; // Identifier of the animal's owner
+  weight: number; // Weight of the animal
 
   constructor(data: Animal) {
     this.id = data.id;

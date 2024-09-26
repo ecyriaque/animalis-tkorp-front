@@ -30,6 +30,7 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
   ownerId,
   onAddAnimal,
 }) => {
+  // State variables to manage the form inputs
   const [name, setName] = useState("");
   const [species, setSpecies] = useState("Dog");
   const [weight, setWeight] = useState<number>(0);
@@ -38,10 +39,12 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
   const [breed, setBreed] = useState("");
   const [image, setImage] = useState<string>("");
 
+  // List of allowed species for the dropdown
   const allowedSpecies = ["Cat", "Bird", "Rabbit", "Hamster", "Turtle", "Dog"];
 
   const { openSnackbar } = useSnackbar();
 
+  // Effect to fetch the image for the selected species when the modal opens or species changes
   useEffect(() => {
     const fetchImage = () => {
       const img = AnimalService.getImage(species);
@@ -53,9 +56,11 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
     }
   }, [open, species]);
 
+  // Function to handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Create a new instance of CreateAnimalDto with the input values
     const animalData = new CreateAnimalDto({
       name,
       species,
@@ -69,6 +74,7 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
     try {
       const { message, animal } = await AnimalService.createAnimal(animalData);
 
+      // Create a new animal object to update the UI
       const newAnimal: Animal = {
         id: animal.id,
         name,
@@ -80,15 +86,14 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
         ownerId,
       };
 
-      onAddAnimal(newAnimal);
-      handleClose();
-      openSnackbar(message, "success");
+      onAddAnimal(newAnimal); // Call the parent function to add the animal
+      handleClose(); // Close the modal
+      openSnackbar(message, "success"); // Show success message using snackbar
     } catch (error) {
       console.error("Error creating animal:", error);
-      openSnackbar("Error creating animal.", "error");
+      openSnackbar("Error creating animal.", "error"); // Show error message using snackbar
     }
   };
-
   return (
     <Modal open={open} onClose={handleClose}>
       <Box

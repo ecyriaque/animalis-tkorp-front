@@ -10,7 +10,6 @@ const Navbar: React.FC = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#4CAF50" }}>
       {" "}
-      {/* Change la couleur de fond */}
       <Toolbar>
         <Typography
           variant="h6"

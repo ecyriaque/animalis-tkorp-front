@@ -19,6 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import CreatePersonModal from "./CreatePersonModal";
 import { SelectChangeEvent } from "@mui/material/Select";
+
 interface Person {
   id: number;
   firstName: string;
@@ -30,22 +31,36 @@ interface PersonListProps {
 }
 
 export default function PersonList({ persons = [] }: PersonListProps) {
+  // State for managing the search term input by the user
   const [searchTerm, setSearchTerm] = useState("");
+
+  // State for managing the current sort order (ascending or descending)
   const [sortOrder, setSortOrder] = useState("asc");
+
+  // State for managing the current page of persons displayed
   const [page, setPage] = useState(1);
+
+  // Number of items to display per page
   const itemsPerPage = 8;
+
+  // Router instance for navigation
   const router = useRouter();
+
+  // State for managing the visibility of the modal for adding a person
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Handler for updating the search term based on user input
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     setPage(1);
   };
 
+  // Handler for updating the sort order based on user selection
   const handleSortChange = (event: SelectChangeEvent<string>) => {
     setSortOrder(event.target.value as string);
   };
 
+  // Filter persons based on the search term and sort them
   const filteredPersons = persons
     .filter((person) => {
       const fullName = `${person.firstName} ${person.lastName}`.toLowerCase();
@@ -60,7 +75,10 @@ export default function PersonList({ persons = [] }: PersonListProps) {
       return sortOrder === "asc" ? comparison : -comparison;
     });
 
+  // Calculate total pages based on filtered persons and items per page
   const totalPages = Math.ceil(filteredPersons.length / itemsPerPage);
+
+  // Paginate filtered persons for display
   const paginatedPersons = filteredPersons.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage

@@ -31,7 +31,7 @@ const EditAnimalModal: React.FC<EditAnimalModalProps> = ({
     <Modal
       open={open}
       onClose={onClose}
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} // Centrer le modal
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <Box
         sx={{
@@ -39,7 +39,7 @@ const EditAnimalModal: React.FC<EditAnimalModalProps> = ({
           backgroundColor: "white",
           borderRadius: 2,
           boxShadow: 3,
-          width: "400px", // Largeur fixe pour le modal
+          width: "400px",
         }}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>

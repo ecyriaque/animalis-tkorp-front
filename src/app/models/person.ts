@@ -1,21 +1,21 @@
 import { Animal } from "./animal";
 
 interface PersonData {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  animals?: Animal[];
+  id: number; // Unique identifier for the person
+  firstName: string; // First name of the person
+  lastName: string; // Last name of the person
+  email: string; // Email address of the person
+  phoneNumber: string; // Phone number of the person
+  animals?: Animal[]; // Optional array of animals owned by the person
 }
 
 export class Person {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  animals: Animal[];
+  id: number; // Unique identifier for the person
+  firstName: string; // First name of the person
+  lastName: string; // Last name of the person
+  email: string; // Email address of the person
+  phoneNumber: string; // Phone number of the person
+  animals: Animal[]; // Array of Animal instances owned by the person
 
   constructor(data: PersonData) {
     this.id = data.id;

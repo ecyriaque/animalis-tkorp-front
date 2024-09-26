@@ -22,15 +22,6 @@ import { PersonHeaviestGroupDto } from "./DTO/person-heaviest-group.dto";
 import { PersonMostAnimalsDto } from "./DTO/person-most-animals.dto";
 
 export default function Home() {
-  interface Person {
-    firstName: string;
-    lastName: string;
-    animalName?: string;
-    weight?: number;
-    totalWeight?: number;
-    animalCount?: number;
-  }
-
   const [oldestAnimal, setOldestAnimal] = useState<Animal>();
 
   const [popularSpecies, setPopularSpecies] = useState<string | null>(null);
@@ -50,6 +41,7 @@ export default function Home() {
     months: number;
   } | null>(null);
 
+  // Set loading to false after data fetch
   const calculateAge = (
     dateOfBirth: string
   ): { years: number; months: number } => {
@@ -69,6 +61,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch data from services
         const oldest = await AnimalService.getOlderAnimal();
         const popular = await AnimalService.getPopularSpecies();
         const heaviestAnimal =
@@ -76,15 +69,18 @@ export default function Home() {
         const heaviestGroup = await PersonService.getPersonWithHeaviestGroup();
         const mostAnimals = await PersonService.getPersonWithMostAnimals();
 
+        // Set state with fetched data
         setOldestAnimal(oldest);
         setPopularSpecies(popular.species);
         setHeaviestAnimalPerson(heaviestAnimal);
         setHeaviestGroupPerson(heaviestGroup);
         setMostAnimalsPerson(mostAnimals);
+
+        // Calculate age for the oldest animal
         if (oldest) {
           setOldestAnimalAge(calculateAge(oldest.dateOfBirth));
         }
-        setLoading(false);
+        setLoading(false); // Set loading to false after data fetch
       } catch (error) {
         console.error("Error fetching data:", error);
       }

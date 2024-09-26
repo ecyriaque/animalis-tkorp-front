@@ -33,13 +33,14 @@ interface PersonDetailClientProps {
 }
 
 const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
-  const [open, setOpen] = useState(false);
-  const [animals, setAnimals] = useState(person.animals);
-  const [isEditingFirstName, setIsEditingFirstName] = useState(false);
-  const [isEditingLastName, setIsEditingLastName] = useState(false);
-  const [isEditingEmail, setIsEditingEmail] = useState(false);
-  const [isEditingPhoneNumber, setIsEditingPhoneNumber] = useState(false);
+  const [open, setOpen] = useState(false); // State to manage the opening of the add animal modal
+  const [animals, setAnimals] = useState(person.animals); // State to store the person's animals
+  const [isEditingFirstName, setIsEditingFirstName] = useState(false); // State to enable editing of first name
+  const [isEditingLastName, setIsEditingLastName] = useState(false); // State to enable editing of last name
+  const [isEditingEmail, setIsEditingEmail] = useState(false); // State to enable editing of email
+  const [isEditingPhoneNumber, setIsEditingPhoneNumber] = useState(false); // State to enable editing of phone number
 
+  // States to store the edited values of fields
   const [editedFirstName, setEditedFirstName] = useState(person.firstName);
   const [editedLastName, setEditedLastName] = useState(person.lastName);
   const [editedEmail, setEditedEmail] = useState(person.email);
@@ -51,17 +52,20 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
   const { openSnackbar } = useSnackbar();
   const router = useRouter();
 
+  // Handler to add a new animal to the list
   const handleAddAnimal = (newAnimal: Animal) => {
     setAnimals((prevAnimals) => [...prevAnimals, newAnimal]);
-    setOpen(false);
+    setOpen(false); // Close the modal after adding
   };
 
+  // Handler to delete an animal from the list
   const handleDeleteAnimal = (animalId: number) => {
     setAnimals((prevAnimals) =>
       prevAnimals.filter((animal) => animal.id !== animalId)
     );
   };
 
+  // Handler to delete the person after confirmation
   const handleDeletePerson = () => {
     openConfirmationDialog(
       "Confirm the deletion",
@@ -78,10 +82,12 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
     );
   };
 
+  // Regular expressions for validation
   const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
   const phoneRegex = /^[0-9-]*$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  // Handler to save changes after editing
   const handleSaveChanges = async () => {
     if (!emailRegex.test(editedEmail)) {
       openSnackbar("Invalid email format", "error");
@@ -102,7 +108,6 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
     setIsEditingPhoneNumber(false);
     openSnackbar("Changes saved", "success");
   };
-
   return (
     <Grid
       container

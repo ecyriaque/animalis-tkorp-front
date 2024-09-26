@@ -17,14 +17,15 @@ interface AnimalDetailProps {
 }
 
 const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
-  const imageUrl = AnimalService.getImage(animal.species, animal.id);
+  const imageUrl = AnimalService.getImage(animal.species, animal.id); // Fetching the image URL based on species and ID
   const { openConfirmationDialog } = useConfirmationDialog();
   const { openSnackbar } = useSnackbar();
   const router = useRouter();
 
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [localAnimal, setLocalAnimal] = useState(animal);
+  const [isEditModalOpen, setEditModalOpen] = useState(false); // State to control the edit modal visibility
+  const [localAnimal, setLocalAnimal] = useState(animal); // State to hold the current animal data
 
+  // Function to handle the update of animal details
   const handleUpdate = async (updatedAnimal: Animal) => {
     try {
       const response = await AnimalService.updateAnimal(
@@ -39,6 +40,7 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
     }
   };
 
+  // Function to handle the deletion of the animal
   const handleDelete = () => {
     openConfirmationDialog(
       "Confirm the deletion",
@@ -56,6 +58,7 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
     );
   };
 
+  // Function to calculate age from the date of birth
   const calculateAge = (
     dateOfBirth: string
   ): { years: number; months: number } => {
@@ -73,7 +76,6 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
   };
 
   const { years, months } = calculateAge(localAnimal.dateOfBirth);
-
   return (
     <Box
       sx={{
@@ -180,4 +182,4 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
   );
 };
 
-export default AnimalDetail;
+export default AnimalDetail; // Exporting the AnimalDetail component for use in other parts of the application

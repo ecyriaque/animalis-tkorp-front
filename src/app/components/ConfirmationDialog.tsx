@@ -1,4 +1,3 @@
-// ConfirmationDialog.tsx
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import Dialog from "@mui/material/Dialog";
@@ -8,6 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
+// Define the type for the Confirmation Dialog Context
 type ConfirmationDialogContextType = {
   openConfirmationDialog: (
     title: string,
@@ -23,10 +23,10 @@ const ConfirmationDialogContext = createContext<
 export const ConfirmationDialogProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-  const [onConfirm, setOnConfirm] = useState<() => void>(() => () => {});
+  const [open, setOpen] = useState(false); // State to control dialog visibility
+  const [title, setTitle] = useState(""); // State to hold the dialog title
+  const [message, setMessage] = useState(""); // State to hold the dialog message
+  const [onConfirm, setOnConfirm] = useState<() => void>(() => () => {}); // Callback for confirmation action
 
   const openConfirmationDialog = (
     title: string,
@@ -58,10 +58,10 @@ export const ConfirmationDialogProvider: React.FC<{ children: ReactNode }> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            cancel
+            Cancel
           </Button>
           <Button onClick={handleConfirm} color="primary">
-            confirm
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>
