@@ -27,7 +27,6 @@ import { useSnackbar } from "@/app/components/Snackbar";
 import PersonService from "@/app/services/personService";
 import { useRouter } from "next/navigation";
 import { UpdatePersonDto } from "@/app/DTO/UpdatePerson.dto";
-import { Grid3x3 } from "@mui/icons-material";
 
 interface PersonDetailClientProps {
   person: Person;

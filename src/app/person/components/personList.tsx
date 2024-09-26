@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import {
   Grid,
@@ -18,13 +17,12 @@ import {
   Pagination,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import CreatePersonModal from "./CreatePersonModal"; // Assurez-vous que le chemin est correct
-
+import CreatePersonModal from "./CreatePersonModal";
+import { SelectChangeEvent } from "@mui/material/Select";
 interface Person {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
-  image: string;
 }
 
 interface PersonListProps {
@@ -37,14 +35,14 @@ export default function PersonList({ persons = [] }: PersonListProps) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
   const router = useRouter();
-  const [modalOpen, setModalOpen] = useState(false); // État pour le modal
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     setPage(1);
   };
 
-  const handleSortChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSortChange = (event: SelectChangeEvent<string>) => {
     setSortOrder(event.target.value as string);
   };
 
@@ -71,7 +69,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
     return (
       <Grid item key={person.id} xs={12} sm={6} md={4} lg={3}>
         <Card
-          style={{
+          sx={{
             cursor: "grab",
             transition: "transform 0.3s",
             "&:hover": {
@@ -121,7 +119,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setModalOpen(true)} // Ouvrir le modal
+          onClick={() => setModalOpen(true)}
           style={{ marginLeft: "20px" }}
         >
           Add a Owner

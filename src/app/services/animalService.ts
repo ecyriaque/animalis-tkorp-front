@@ -85,7 +85,7 @@ export const AnimalService = {
   async getAllAnimals(): Promise<Animal[]> {
     try {
       const response = await axios.get(`${API_URL}/animal`);
-      return response.data.map((item: any) => new Animal(item));
+      return response.data.map((item: Animal) => new Animal(item));
     } catch (error) {
       console.error("Error fetching all animals:", error);
       throw error;

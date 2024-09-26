@@ -8,7 +8,7 @@ export class Animal {
   ownerId: number;
   weight: number;
 
-  constructor(data: any) {
+  constructor(data: Animal) {
     this.id = data.id;
     this.name = data.name;
     this.color = data.color;

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useSnackbar } from "@/app/components/Snackbar";
 
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -112,6 +112,7 @@ const CreatePersonModal: React.FC<CreatePersonModalProps> = ({
 
       router.push(`/person/${personId}`);
     } catch (error) {
+      console.log(error);
       openSnackbar("Error creating person", "error");
     }
   };

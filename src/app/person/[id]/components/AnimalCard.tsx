@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AnimalService } from "@/app/services/animalService";
 import { useConfirmationDialog } from "@/app/components/ConfirmationDialog";
 import { useSnackbar } from "@/app/components/Snackbar";
+import Image from "next/image";
 
 interface AnimalCardProps {
   animal: {
@@ -48,21 +49,22 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
         },
       }}
     >
-      <img
+      <Image
         src={AnimalService.getImage(animal.species, animal.id)}
         alt={animal.name}
+        width={200}
+        height={150}
         style={{
-          width: "100%",
-          height: "150px",
           objectFit: "contain",
           borderRadius: 8,
         }}
       />
+
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
         Hi my name is {animal.name}
       </Typography>
       <Typography color="primary">
-        <PetsIcon fontSize="small" /> i'm a {animal.species}
+        <PetsIcon fontSize="small" /> I&apos;m a {animal.species}
       </Typography>
       <Button
         variant="contained"

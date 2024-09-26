@@ -17,11 +17,7 @@ const NotFound = () => {
           <Typography variant="body1" color="textSecondary" gutterBottom>
             Sorry, the person you are looking for does not exist.
           </Typography>
-          <img
-            src="https://media.giphy.com/media/3oEjI6SIIHBdRxX3f6/giphy.gif"
-            alt="Not Found Animation"
-            style={{ width: "100%", height: "auto", marginBottom: "16px" }}
-          />
+
           <Typography variant="body2" color="textSecondary">
             Please check the URL or return to the homepage.
           </Typography>

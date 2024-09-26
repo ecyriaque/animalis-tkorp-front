@@ -15,6 +15,7 @@ import { AnimalService } from "@/app/services/animalService";
 import { CreateAnimalDto } from "@/app/DTO/CreateAnimal.dto";
 import { Animal } from "@/app/models/animal";
 import { useSnackbar } from "@/app/components/Snackbar";
+import Image from "next/image";
 
 interface AddAnimalModalProps {
   open: boolean;
@@ -110,13 +111,13 @@ const AddAnimalModal: React.FC<AddAnimalModalProps> = ({
 
         {image && (
           <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
-            <img
+            <Image
               src={image}
               alt={`Image of ${species}`}
+              width={150}
+              height={150}
               style={{
-                width: "100%",
-                height: "auto",
-                maxHeight: "150px",
+                objectFit: "cover",
                 borderRadius: "8px",
               }}
             />

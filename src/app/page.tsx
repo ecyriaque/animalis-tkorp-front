@@ -17,15 +17,25 @@ import { AnimalService } from "./services/animalService";
 import PersonService from "./services/personService";
 
 export default function Home() {
+  interface Person {
+    firstName: string;
+    lastName: string;
+    animalName?: string;
+    weight?: number;
+    totalWeight?: number;
+    animalCount?: number;
+  }
+
   const [oldestAnimal, setOldestAnimal] = useState<Animal | null>(null);
   const [popularSpecies, setPopularSpecies] = useState<string | null>(null);
-  const [heaviestAnimalPerson, setHeaviestAnimalPerson] = useState<any | null>(
+  const [heaviestAnimalPerson, setHeaviestAnimalPerson] =
+    useState<Person | null>(null);
+  const [heaviestGroupPerson, setHeaviestGroupPerson] = useState<Person | null>(
     null
   );
-  const [heaviestGroupPerson, setHeaviestGroupPerson] = useState<any | null>(
+  const [mostAnimalsPerson, setMostAnimalsPerson] = useState<Person | null>(
     null
   );
-  const [mostAnimalsPerson, setMostAnimalsPerson] = useState<any | null>(null);
   const [loading, setLoading] = useState(true); // State to track loading
 
   useEffect(() => {
