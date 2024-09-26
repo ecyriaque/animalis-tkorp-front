@@ -108,7 +108,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
             sx={{
               mt: 1,
               mb: 0,
-              objectFit: "contain", // Assure que l'image entière est visible
+              objectFit: "contain",
             }}
           />
           <CardContent sx={{ background: "#DCDCC6" }}>
