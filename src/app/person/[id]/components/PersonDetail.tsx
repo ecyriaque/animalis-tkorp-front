@@ -114,7 +114,6 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
       justifyContent="center"
       alignItems="center"
       style={{
-        minHeight: "100vh",
         padding: "20px",
         backgroundColor: "#E8F5E9",
       }}
