@@ -1,12 +1,11 @@
 "use client";
 
-import { Card, Typography, Button } from "@mui/material";
+import { Card, Typography, Button, CardMedia } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AnimalService } from "@/app/services/animalService";
 import { useConfirmationDialog } from "@/app/components/ConfirmationDialog";
 import { useSnackbar } from "@/app/components/Snackbar";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface AnimalCardProps {
@@ -52,11 +51,10 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onDelete }) => {
         backgroundColor: "#DCDCC6",
       }}
     >
-      <Image
-        src={AnimalService.getImage(animal.species, animal.id)}
-        alt={animal.name}
-        width={200}
-        height={150}
+      <CardMedia
+        component="img"
+        height="100vh"
+        image={AnimalService.getImage(animal.species, animal.id)}
         style={{
           objectFit: "contain",
           borderRadius: 8,
