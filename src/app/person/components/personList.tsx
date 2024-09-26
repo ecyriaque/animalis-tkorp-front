@@ -18,6 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import CreatePersonModal from "./CreatePersonModal";
 import { SelectChangeEvent } from "@mui/material/Select";
+import PersonService from "@/app/services/personService";
 
 interface Person {
   id: number;
@@ -102,8 +103,13 @@ export default function PersonList({ persons = [] }: PersonListProps) {
           <CardMedia
             component="img"
             height="250"
-            image="/images/person.jpeg"
+            src={PersonService.getPersonImage(person.id)}
             alt={`${person.firstName} ${person.lastName}`}
+            sx={{
+              mt: 1,
+              mb: 0,
+              objectFit: "contain", // Assure que l'image entière est visible
+            }}
           />
           <CardContent sx={{ background: "#DCDCC6" }}>
             <Typography variant="h6" component="div">

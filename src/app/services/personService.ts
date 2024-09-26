@@ -6,6 +6,19 @@ import { PersonMostAnimalsDto } from "../DTO/person-most-animals.dto";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+const personImages: string[] = [
+  "/images/person/person1.jpeg",
+  "/images/person/person2.jpeg",
+  "/images/person/person3.jpeg",
+  "/images/person/person4.jpeg",
+  "/images/person/person5.jpeg",
+  "/images/person/person6.jpeg",
+  "/images/person/person7.jpeg",
+  "/images/person/person8.jpeg",
+  "/images/person/person9.jpeg",
+  "/images/person/person10.jpeg",
+];
+
 const PersonService = {
   // get all persons from the API
   async getAllPersons(): Promise<Person[]> {
@@ -168,6 +181,25 @@ const PersonService = {
       );
       throw error;
     }
+  },
+  getPersonImage(personId?: number): string {
+    if (personId !== undefined) {
+      const lastDigit = personId % 10;
+      let imageIndex = lastDigit - 1;
+
+      // Si personId est 0 ou l'index est inférieur à 0, on met l'image à l'index 0
+      if (personId === 0 || imageIndex < 0) {
+        imageIndex = 0;
+      }
+
+      if (imageIndex >= 0 && imageIndex < personImages.length) {
+        return personImages[imageIndex];
+      }
+    }
+
+    // Si pas de personId ou si en dehors de la limite, on prend une image aléatoire
+    const randomIndex = Math.floor(Math.random() * personImages.length);
+    return personImages[randomIndex];
   },
 };
 
