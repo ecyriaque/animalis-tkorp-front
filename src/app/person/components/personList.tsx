@@ -94,12 +94,14 @@ export default function PersonList({ persons = [] }: PersonListProps) {
               transform: "scale(1.05)",
               boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
             },
+            background: "#DCDCC6",
+            height: { xs: "auto", md: 300, lg: 300, xl: 400 },
           }}
           onClick={() => router.push(`/person/${person.id}`)}
         >
           <CardMedia
             component="img"
-            height="140"
+            height="250"
             image="/images/person.jpeg"
             alt={`${person.firstName} ${person.lastName}`}
           />
@@ -114,7 +116,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", minHeight: "100vh" }}>
       <Toolbar>
         <TextField
           label="Search"
@@ -138,7 +140,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
           onClick={() => setModalOpen(true)}
           style={{ marginLeft: "20px" }}
         >
-          Add a Owner
+          Add an Owner
         </Button>
       </Typography>
       <Grid container spacing={2}>
@@ -151,8 +153,7 @@ export default function PersonList({ persons = [] }: PersonListProps) {
         color="primary"
         style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
       />
-      <CreatePersonModal open={modalOpen} onClose={() => setModalOpen(false)} />{" "}
-      {/* Intégration du modal */}
+      <CreatePersonModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }
