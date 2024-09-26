@@ -47,11 +47,12 @@ export default function PersonList({ persons = [] }: PersonListProps) {
   };
 
   const filteredPersons = persons
-    .filter(
-      (person) =>
-        person.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        person.lastName.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    .filter((person) => {
+      const fullName = `${person.firstName} ${person.lastName}`.toLowerCase();
+      const searchWords = searchTerm.toLowerCase().trim().split(/\s+/);
+
+      return searchWords.every((word) => fullName.includes(word));
+    })
     .sort((a, b) => {
       const comparison = `${a.firstName} ${a.lastName}`.localeCompare(
         `${b.firstName} ${b.lastName}`

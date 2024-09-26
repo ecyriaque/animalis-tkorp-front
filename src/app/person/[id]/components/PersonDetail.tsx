@@ -119,17 +119,18 @@ const PersonDetail: React.FC<PersonDetailClientProps> = ({ person }) => {
           width: "100%",
           padding: 3,
           borderRadius: 3,
+          backgroundColor: "#F5F5DC",
         }}
       >
         <Grid
           container
           direction="column"
           alignItems="center"
-          sx={{ backgroundColor: "E8F5E9" }}
+          sx={{ borderRadius: 3, backgroundColor: "#DCDCC6" }}
         >
           <Box
             sx={{
-              backgroundColor: "#E8F5E9",
+              backgroundColor: "#DCDCC6",
               padding: 3,
               borderRadius: 3,
               width: { xs: "90%", sm: "70%", md: "50%" },
