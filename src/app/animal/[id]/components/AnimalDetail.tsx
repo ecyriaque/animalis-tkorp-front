@@ -91,9 +91,15 @@ const AnimalDetail: React.FC<AnimalDetailProps> = ({ animal, owner }) => {
       </Typography>
 
       {owner && (
-        <Typography variant="body1" gutterBottom sx={{ fontSize: "1.1rem" }}>
+        <Typography
+          variant="body1"
+          gutterBottom
+          onClick={() => router.push(`/person/${owner.id}`)}
+        >
           I belong to{" "}
-          <strong>
+          <strong
+            style={{ fontSize: "1.1rem", cursor: "pointer", color: "#1976D2" }}
+          >
             {owner.firstName} {owner.lastName}
           </strong>
           .
